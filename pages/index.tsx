@@ -11,6 +11,15 @@ type TimestampEvent = {
   clipUrl: string;
 };
 
+// watched
+//    {
+//      type: "mandarinvocab",
+//      url: "https://www.youtube.com/watch?v=NwrBnIBMS2E",
+//    },
+//    { type: "jackychan", url: "https://www.youtube.com/watch?v=yyDFHouhmeY" },
+//    { type: "3b1b", url: "https://www.youtube.com/watch?v=rHLEWRxRGiM" },
+    
+
 const Home: React.FC = () => {
   const [timestamps, setTimestamps] = useState<TimestampEvent[]>([]);
   const [currentClip, setCurrentClip] = useState<number>(0);
@@ -19,12 +28,6 @@ const Home: React.FC = () => {
   const [progress, setProgress] = useState<number>(0);
 
   const clips: { url: string; type: string }[] = [
-    {
-      type: "mandarinvocab",
-      url: "https://www.youtube.com/watch?v=NwrBnIBMS2E",
-    },
-    { type: "jackychan", url: "https://www.youtube.com/watch?v=yyDFHouhmeY" },
-    { type: "3b1b", url: "https://www.youtube.com/watch?v=rHLEWRxRGiM" },
     {
       type: "planetearth",
       url: "https://www.youtube.com/watch?v=bbaX1yeSatQ",
