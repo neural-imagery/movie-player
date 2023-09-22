@@ -10,4 +10,4 @@ df = pd.read_csv("dataset/dataset.csv", header=0)
 df = df.sample(frac=1).reset_index(drop=True)
 
 # save the dataset as dataset_randomized.json
-df.to_json("dataset/dataset_randomized.json", orient="records")
+df.to_json("public/dataset_randomized.json", orient="records")
