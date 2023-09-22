@@ -3,10 +3,12 @@ import ReactPlayer from "react-player/youtube";
 import { CSVLink } from "react-csv";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 
+type Event = "started" | "ended" | "rest";
+
 type TimestampEvent = {
   videoIndex: number;
   timestamp: string;
-  event: "started" | "ended" | "rest";
+  event: Event;
   clipType: string;
   clipUrl: string;
 };
@@ -31,8 +33,6 @@ type TimestampEvent = {
 //      type: "mandarinvocab",
 //      url: "https://www.youtube.com/watch?v=ySPatiyLWAo",
 //    },
-    
-    
 
 const Home: React.FC = () => {
   const [timestamps, setTimestamps] = useState<TimestampEvent[]>([]);
@@ -40,129 +40,16 @@ const Home: React.FC = () => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [isRestPeriod, setIsRestPeriod] = useState<boolean>(true);
   const [progress, setProgress] = useState<number>(0);
+  const [clips, setClips] = useState<{ url: string; type: string }[]>([]); // New state variable
 
-  const clips: { url: string; type: string }[] = [
-    {
-      type: "planetearth",
-      url: "https://www.youtube.com/watch?v=7qQely6VBUs",
-    },
-    { type: "3b1b", url: "https://www.youtube.com/watch?v=-9OUyo8NFZg" },
-    { type: "jackychan", url: "https://www.youtube.com/watch?v=WtfeiAYeuJ0" },
-    { type: "jackychan", url: "https://www.youtube.com/watch?v=8sxwbaKJnZ4" },
-    {
-      type: "mandarinvocab",
-      url: "https://www.youtube.com/watch?v=a68_irrmbkg",
-    },
-    {
-      type: "planetearth",
-      url: "https://www.youtube.com/watch?v=6bx5JUGVahk",
-    },
-    {
-      type: "planetearth",
-      url: "https://www.youtube.com/watch?v=tf1bytsDDho",
-    },
-    {
-      type: "planetearth",
-      url: "https://www.youtube.com/watch?v=jTpg0pODGk8",
-    },
-    {
-      type: "planetearth",
-      url: "https://www.youtube.com/watch?v=EWr8fzUz-Yw",
-    },
-    {
-      type: "mandarinvocab",
-      url: "https://www.youtube.com/watch?v=87EKW3C8IHo",
-    },
-    {
-      type: "mandarinvocab",
-      url: "https://www.youtube.com/watch?v=EZtomXl6p08",
-    },
-    { type: "jackychan", url: "https://www.youtube.com/watch?v=GKCfwcxbUMw" },
-    { type: "jackychan", url: "https://www.youtube.com/watch?v=MYs-FIMxePU" },
-    {
-      type: "mandarinvocab",
-      url: "https://www.youtube.com/watch?v=-CaUn6P8ir4",
-    },
-    {
-      type: "animatedshorts",
-      url: "https://www.youtube.com/watch?v=B6uuIHpFkuo",
-    },
-    {
-      type: "animatedshorts",
-      url: "https://www.youtube.com/watch?v=LVLoc6FrLi0",
-    },
-    {
-      type: "mandarinvocab",
-      url: "https://www.youtube.com/watch?v=vPNF35pirEM",
-    },
-    { type: "3b1b", url: "https://www.youtube.com/watch?v=cy8r7WSuT1I" },
-    {
-      type: "animatedshorts",
-      url: "https://www.youtube.com/watch?v=I5cFBi02O34",
-    },
-    {
-      type: "mandarinvocab",
-      url: "https://www.youtube.com/watch?v=0Ta07y15Ces",
-    },
-    {
-      type: "animatedshorts",
-      url: "https://www.youtube.com/watch?v=Bl1FOKpFY2Q",
-    },
-    {
-      type: "animatedshorts",
-      url: "https://www.youtube.com/watch?v=PfyJQEIsMt0",
-    },
-    { type: "jackychan", url: "https://www.youtube.com/watch?v=TZfVLePl1Hs" },
-    { type: "3b1b", url: "https://www.youtube.com/watch?v=zjMuIxRvygQ" },
-    { type: "3b1b", url: "https://www.youtube.com/watch?v=U_85TaXbeIo" },
-    {
-      type: "mandarinvocab",
-      url: "https://www.youtube.com/watch?v=lyRYhlfaqxs",
-    },
-    {
-      type: "planetearth",
-      url: "https://www.youtube.com/watch?v=el4CQj-TCbA",
-    },
-    {
-      type: "animatedshorts",
-      url: "https://www.youtube.com/watch?v=e9dZQelULDk",
-    },
-    {
-      type: "animatedshorts",
-      url: "https://www.youtube.com/watch?v=uMVtpCPx8ow",
-    },
-    { type: "jackychan", url: "https://www.youtube.com/watch?v=hPRYwQJvLFM" },
-    {
-      type: "planetearth",
-      url: "https://www.youtube.com/watch?v=SiezPjMVjTw",
-    },
-    { type: "jackychan", url: "https://www.youtube.com/watch?v=TZfVLePl1Hs" },
-    {
-      type: "planetearth",
-      url: "https://www.youtube.com/watch?v=NGtzSd3wFY4",
-    },
-    { type: "jackychan", url: "https://www.youtube.com/watch?v=B215g-Evv0U" },
-    {
-      type: "animatedshorts",
-      url: "https://www.youtube.com/watch?v=AZS5cgybKcI",
-    },
-    {
-      type: "animatedshorts",
-      url: "https://www.youtube.com/watch?v=zfC_GuHiP68",
-    },
-    { type: "jackychan", url: "https://www.youtube.com/watch?v=CRK6shZ0Nxo" },
-    { type: "3b1b", url: "https://www.youtube.com/watch?v=S9JGmA5_unY" },
-    {
-      type: "mandarinvocab",
-      url: "https://www.youtube.com/watch?v=lYS-WnFmG54",
-    },
-    {
-      type: "planetearth",
-      url: "https://www.youtube.com/watch?v=PvWLbK_mNw0",
-    },
-  ];
-
-  const restTime = 20; // seconds
+  const restTime = 1; // seconds
+  useEffect(() => {
+    fetch("dataset_randomized.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setClips(data);
+      });
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -183,13 +70,13 @@ const Home: React.FC = () => {
     }, 1000);
   };
 
-  const recordTimestamp = (event: "started" | "ended" | "rest") => {
+  const recordTimestamp = (event: Event) => {
     const timestampEvent: TimestampEvent = {
       videoIndex: currentClip,
       timestamp: new Date().toLocaleString(),
       event,
-      clipType: clips[currentClip].type,
-      clipUrl: clips[currentClip].url,
+      clipType: clips[currentClip]?.type,
+      clipUrl: clips[currentClip]?.url,
     };
     setTimestamps([...timestamps, timestampEvent]);
   };
@@ -218,7 +105,7 @@ const Home: React.FC = () => {
       ) : (
         isMounted && (
           <ReactPlayer
-            url={clips[currentClip].url}
+            url={clips[currentClip]?.url}
             controls={true}
             onPlay={handleStart}
             onEnded={handleEnd}
