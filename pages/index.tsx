@@ -158,7 +158,7 @@ const Home: React.FC = () => {
     },
   ];
 
-  const restTime = 5; // seconds
+  const restTime = 20; // seconds
 
   useEffect(() => {
     setIsMounted(true);
