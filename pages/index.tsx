@@ -18,6 +18,20 @@ type TimestampEvent = {
 //    },
 //    { type: "jackychan", url: "https://www.youtube.com/watch?v=yyDFHouhmeY" },
 //    { type: "3b1b", url: "https://www.youtube.com/watch?v=rHLEWRxRGiM" },
+//  {
+//      type: "planetearth",
+//      url: "https://www.youtube.com/watch?v=bbaX1yeSatQ",
+//    },
+//    {
+//      type: "animatedshorts",
+//      url: "https://www.youtube.com/watch?v=ofnCdC8P70g",
+//    },
+//    { type: "3b1b", url: "https://www.youtube.com/watch?v=v8VSDg_WQlA" },
+//    {
+//      type: "mandarinvocab",
+//      url: "https://www.youtube.com/watch?v=ySPatiyLWAo",
+//    },
+    
     
 
 const Home: React.FC = () => {
@@ -28,19 +42,6 @@ const Home: React.FC = () => {
   const [progress, setProgress] = useState<number>(0);
 
   const clips: { url: string; type: string }[] = [
-    {
-      type: "planetearth",
-      url: "https://www.youtube.com/watch?v=bbaX1yeSatQ",
-    },
-    {
-      type: "animatedshorts",
-      url: "https://www.youtube.com/watch?v=ofnCdC8P70g",
-    },
-    { type: "3b1b", url: "https://www.youtube.com/watch?v=v8VSDg_WQlA" },
-    {
-      type: "mandarinvocab",
-      url: "https://www.youtube.com/watch?v=ySPatiyLWAo",
-    },
     {
       type: "planetearth",
       url: "https://www.youtube.com/watch?v=7qQely6VBUs",
