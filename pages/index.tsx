@@ -15,6 +15,8 @@ const Home: React.FC = () => {
   const [timestamps, setTimestamps] = useState<TimestampEvent[]>([]);
   const [currentClip, setCurrentClip] = useState<number>(0);
   const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [isRestPeriod, setIsRestPeriod] = useState<boolean>(true);
+  const [progress, setProgress] = useState<number>(0);
 
   const clips: { url: string; type: string }[] = [
     { type: "wheelchair", url: "https://www.youtube.com/watch?v=_46AoSnHCRo" },
@@ -23,7 +25,21 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     setIsMounted(true);
+    handleRestPeriod();
   }, []);
+
+  const handleRestPeriod = () => {
+    setIsRestPeriod(true);
+    let counter = 0;
+    const interval = setInterval(() => {
+      counter += 1;
+      setProgress((counter / 20) * 100);
+      if (counter >= 20) {
+        clearInterval(interval);
+        setIsRestPeriod(false);
+      }
+    }, 1000);
+  };
 
   const recordTimestamp = (event: "started" | "ended") => {
     const timestampEvent: TimestampEvent = {
@@ -46,18 +62,26 @@ const Home: React.FC = () => {
     recordTimestamp("ended");
     if (currentClip < clips.length - 1) {
       setCurrentClip(currentClip + 1);
+      handleRestPeriod();
     }
   };
 
   return (
     <div className="max-w-xl mx-auto mt-8">
-      {isMounted && (
-        <ReactPlayer
-          url={clips[currentClip].url}
-          controls={true}
-          onPlay={handleStart}
-          onEnded={handleEnd}
-        />
+      {isRestPeriod ? (
+        <div>
+          <h2>Rest for 20 seconds</h2>
+          {/* <progress value={progress} max="100"></progress> */}
+        </div>
+      ) : (
+        isMounted && (
+          <ReactPlayer
+            url={clips[currentClip].url}
+            controls={true}
+            onPlay={handleStart}
+            onEnded={handleEnd}
+          />
+        )
       )}
 
       <div className="mt-4">
