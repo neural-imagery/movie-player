@@ -42,7 +42,7 @@ const Home: React.FC = () => {
   const [progress, setProgress] = useState<number>(0);
   const [clips, setClips] = useState<{ url: string; type: string }[]>([]); // New state variable
 
-  const restTime = 1; // seconds
+  const restTime = 20; // seconds
   useEffect(() => {
     fetch("dataset_randomized.json")
       .then((response) => response.json())
